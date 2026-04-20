@@ -1,5 +1,29 @@
 export const systems = [
   {
+    id: 'swn',
+    name: 'Stars Without Number',
+    campaigns: [
+      {
+        id: 'the-void-between',
+        title: 'The Void Between',
+        image: '',
+        description:
+          'A sandbox space opera set in the Fringe Sector, where a crew of drifters operates a battered Free Merchant vessel and stumbles into ancient Precursor mysteries.',
+        status: 'Active',
+        playerCharacters: ['Captain Ren Calyx', 'Dr. Voss', 'Sparks'],
+      },
+      {
+        id: 'iron-dynasty',
+        title: 'Iron Dynasty',
+        image: '',
+        description:
+          'Post-Scream politics in a contested system: three successor states and a pirate confederation vie for dominance while the players carve out their own destiny.',
+        status: 'Completed',
+        playerCharacters: ['Admiral Sato', 'The Broker', 'Cipher'],
+      },
+    ],
+  },
+  {
     id: 'dnd5e',
     name: "Dungeons & Dragons 5th Edition",
     campaigns: [
@@ -53,30 +77,6 @@ export const systems = [
           'A sprawling neo-noir campaign set in the neon underbelly of Imperial Japan, where the yakuza, megacorps, and awakened spirits compete for control.',
         status: 'On Hiatus',
         playerCharacters: ['Yuki "Phantom" Hana', 'Kuro', 'The Preacher'],
-      },
-    ],
-  },
-  {
-    id: 'swn',
-    name: 'Stars Without Number',
-    campaigns: [
-      {
-        id: 'the-void-between',
-        title: 'The Void Between',
-        image: '',
-        description:
-          'A sandbox space opera set in the Fringe Sector, where a crew of drifters operates a battered Free Merchant vessel and stumbles into ancient Precursor mysteries.',
-        status: 'Active',
-        playerCharacters: ['Captain Ren Calyx', 'Dr. Voss', 'Sparks'],
-      },
-      {
-        id: 'iron-dynasty',
-        title: 'Iron Dynasty',
-        image: '',
-        description:
-          'Post-Scream politics in a contested system: three successor states and a pirate confederation vie for dominance while the players carve out their own destiny.',
-        status: 'Completed',
-        playerCharacters: ['Admiral Sato', 'The Broker', 'Cipher'],
       },
     ],
   },
