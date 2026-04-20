@@ -142,10 +142,10 @@ export default function Home() {
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  opacity: isActive ? 1 : 0.6,
+                  opacity: isActive ? 1 : 0.78,
                   filter: isActive
-                    ? `drop-shadow(0 0 10px ${grad.glow})`
-                    : 'drop-shadow(0 0 4px rgba(226,232,240,0.3))',
+                    ? `drop-shadow(0 0 14px ${grad.glow})`
+                    : 'drop-shadow(0 0 6px rgba(226,232,240,0.45))',
                   cursor: 'pointer',
                   border: 'none',
                   backgroundColor: 'transparent',
