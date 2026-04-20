@@ -1,9 +1,31 @@
+import { useState } from 'react';
 import { AppBar, Box, Container, Toolbar, Typography } from '@mui/material';
 import NebulaBackground from '../components/NebulaBackground';
 import SystemSection from '../components/SystemSection';
 import { systems } from '../data/campaigns';
 
+const SYSTEM_GRADIENTS = {
+  swn: {
+    text: 'linear-gradient(90deg, #a78bfa, #38bdf8, #2dd4bf)',
+    underline: 'linear-gradient(90deg, #a78bfa, #38bdf8, #2dd4bf)',
+    glow: 'rgba(56,189,248,0.5)',
+  },
+  dnd5e: {
+    text: 'linear-gradient(90deg, #d4af37, #8b1c2a)',
+    underline: 'linear-gradient(90deg, #d4af37, #8b1c2a)',
+    glow: 'rgba(212,175,55,0.4)',
+  },
+  shadowrun: {
+    text: 'linear-gradient(90deg, #ff6eb4, #a855f7, #22d3ee)',
+    underline: 'linear-gradient(90deg, #ff6eb4, #a855f7, #22d3ee)',
+    glow: 'rgba(255,110,180,0.4)',
+  },
+};
+
 export default function Home() {
+  const [activeSystemId, setActiveSystemId] = useState('swn');
+  const activeSystem = systems.find((s) => s.id === activeSystemId);
+
   return (
     <>
       <NebulaBackground />
@@ -83,9 +105,61 @@ export default function Home() {
           </Box>
         </Box>
 
-        {systems.map((system) => (
-          <SystemSection key={system.id} system={system} />
-        ))}
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '36px',
+            alignItems: 'flex-end',
+            paddingBottom: '12px',
+            borderBottom: '1px solid rgba(124,58,237,0.15)',
+            mb: 4,
+          }}
+        >
+          {systems.map((system) => {
+            const isActive = system.id === activeSystemId;
+            const grad = SYSTEM_GRADIENTS[system.id];
+            return (
+              <Box
+                key={system.id}
+                component="button"
+                onClick={() => setActiveSystemId(system.id)}
+                sx={{
+                  fontFamily: '"Cinzel", serif',
+                  fontSize: '0.68rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  background: grad.text,
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  opacity: isActive ? 1 : 0.3,
+                  cursor: 'pointer',
+                  border: 'none',
+                  padding: '0 0 10px 0',
+                  position: 'relative',
+                  '&::after': isActive
+                    ? {
+                        content: '""',
+                        position: 'absolute',
+                        bottom: '-1px',
+                        left: 0,
+                        right: 0,
+                        height: '2px',
+                        borderRadius: '2px',
+                        background: grad.underline,
+                        boxShadow: `0 0 10px ${grad.glow}`,
+                      }
+                    : {},
+                }}
+              >
+                {system.name}
+              </Box>
+            );
+          })}
+        </Box>
+
+        <SystemSection system={activeSystem} />
       </Container>
     </>
   );
