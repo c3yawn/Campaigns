@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "anthropics-claude-code": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-code"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "frontend-design@anthropics-claude-code": true
+  }
+}
