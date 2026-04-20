@@ -2,11 +2,13 @@ import { Box } from '@mui/material';
 
 export default function NebulaBackground() {
   return (
-    <Box sx={{ position: 'fixed', inset: 0, zIndex: -1, backgroundColor: '#020208' }}>
+    <Box sx={{ position: 'fixed', inset: 0, zIndex: -1, backgroundColor: '#020208', overflow: 'hidden' }}>
       <Box
-        component="img"
-        src="/nebula.gif"
-        alt=""
+        component="video"
+        autoPlay
+        loop
+        muted
+        playsInline
         aria-hidden="true"
         sx={{
           width: '100%',
@@ -15,7 +17,10 @@ export default function NebulaBackground() {
           opacity: 0.45,
           display: 'block',
         }}
-      />
+      >
+        <source src="/nebula.webm" type="video/webm" />
+        <source src="/nebula.mp4" type="video/mp4" />
+      </Box>
       <Box
         sx={{
           position: 'absolute',
