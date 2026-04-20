@@ -41,7 +41,6 @@ export default function Home() {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               fontSize: { xs: '2rem', sm: '2.75rem', md: '3.25rem' },
-              textShadow: 'none',
               filter: 'drop-shadow(0 0 28px rgba(192, 132, 252, 0.45))',
               letterSpacing: '0.02em',
             }}
@@ -52,7 +51,7 @@ export default function Home() {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
               <Box sx={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(124,58,237,0.4))' }} />
               <Typography sx={{ fontFamily: 'Georgia, serif', fontSize: '1.8rem', color: 'rgba(167,139,250,0.35)', lineHeight: 1 }}>
-                "
+                {'\u201C'}
               </Typography>
               <Box sx={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(124,58,237,0.4), transparent)' }} />
             </Box>
