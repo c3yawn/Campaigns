@@ -75,10 +75,28 @@ export default function ProjectCard({ project }) {
         border: '1px solid rgba(124, 58, 237, 0.12)',
         borderRadius: '14px',
         height: '100%',
+        position: 'relative',
+        overflow: 'hidden',
+        animation: `${pulseGlow} 3s ease-in-out infinite`,
         transition: 'transform 0.2s ease, box-shadow 0.2s ease',
         '&:hover': {
           transform: 'translateY(-4px)',
           boxShadow: `0 8px 40px ${project.glow}, 0 0 0 1px rgba(124,58,237,0.2)`,
+          animation: 'none',
+        },
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: '-100%',
+          width: '60%',
+          height: '100%',
+          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)',
+          pointerEvents: 'none',
+          zIndex: 3,
+        },
+        '&:hover::after': {
+          animation: `${shimmer} 0.5s ease forwards`,
         },
       }}
     >
