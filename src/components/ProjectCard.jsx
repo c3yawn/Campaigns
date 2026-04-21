@@ -126,7 +126,6 @@ export default function ProjectCard({ project }) {
                 background: 'white',
                 borderRadius: '50%',
                 animation: `${twinkle} ${s.dur} ease-in-out infinite ${s.delay}`,
-                opacity: Number(s.op),
                 '--base-op': s.op,
               }}
             />
