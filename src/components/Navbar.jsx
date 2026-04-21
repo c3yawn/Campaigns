@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { AppBar, Avatar, Box, Button, Divider, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import SignInModal from './SignInModal';
 
 export default function Navbar() {
   const { user, signOut } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const [signInOpen, setSignInOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState(null);
   const showAuth = location.pathname !== '/';
@@ -24,6 +25,7 @@ export default function Navbar() {
           <Typography
             variant="subtitle2"
             component="span"
+            onClick={!showAuth ? undefined : () => navigate('/')}
             sx={{
               fontFamily: '"Cinzel", serif',
               fontWeight: 700,
@@ -32,6 +34,7 @@ export default function Navbar() {
               fontSize: '0.72rem',
               textShadow: '0 0 20px rgba(167, 139, 250, 0.5)',
               flexGrow: 1,
+              cursor: showAuth ? 'pointer' : 'default',
             }}
           >
             The Yawniverse
