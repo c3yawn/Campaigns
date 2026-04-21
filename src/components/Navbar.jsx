@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { AppBar, Avatar, Box, Button, Divider, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import SignInModal from './SignInModal';
 
 export default function Navbar() {
   const { user, signOut } = useAuth();
+  const location = useLocation();
   const [signInOpen, setSignInOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState(null);
+  const showAuth = location.pathname !== '/';
 
   const initials = user?.user_metadata?.full_name
     ? user.user_metadata.full_name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()
@@ -34,7 +37,7 @@ export default function Navbar() {
             The Yawniverse
           </Typography>
 
-          {user ? (
+          {showAuth && (user ? (
             <>
               <IconButton
                 onClick={(e) => setMenuAnchor(e.currentTarget)}
@@ -123,7 +126,7 @@ export default function Navbar() {
             >
               Sign In
             </Button>
-          )}
+          ))}
         </Toolbar>
       </AppBar>
 

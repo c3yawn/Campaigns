@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import CampaignsHub from './pages/CampaignsHub';
 import CampaignPage from './pages/CampaignPage';
 import Navbar from './components/Navbar';
 
@@ -9,7 +10,8 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/campaign/:systemId/:campaignId" element={<CampaignPage />} />
+        <Route path="/campaigns" element={<CampaignsHub />} />
+        <Route path="/campaigns/:systemId/:campaignId" element={<CampaignPage />} />
       </Routes>
     </>
   );

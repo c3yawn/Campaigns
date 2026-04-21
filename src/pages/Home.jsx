@@ -1,37 +1,9 @@
-import { useState } from 'react';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import NebulaBackground from '../components/NebulaBackground';
-import SystemSection from '../components/SystemSection';
-import { systems } from '../data/campaigns';
-
-const SYSTEM_GRADIENTS = {
-  swn: {
-    text: 'linear-gradient(90deg, #a78bfa, #38bdf8, #2dd4bf)',
-    underline: 'linear-gradient(90deg, #a78bfa, #38bdf8, #2dd4bf)',
-    glow: 'rgba(56,189,248,0.5)',
-  },
-  dnd5e: {
-    text: 'linear-gradient(90deg, #d4af37, #8b1c2a)',
-    underline: 'linear-gradient(90deg, #d4af37, #8b1c2a)',
-    glow: 'rgba(212,175,55,0.4)',
-  },
-  shadowrun: {
-    text: 'linear-gradient(90deg, #ff6eb4, #a855f7, #22d3ee)',
-    underline: 'linear-gradient(90deg, #ff6eb4, #a855f7, #22d3ee)',
-    glow: 'rgba(255,110,180,0.4)',
-  },
-};
-
-const DEFAULT_GRADIENT = {
-  text: 'linear-gradient(90deg, #a78bfa, #818cf8)',
-  underline: 'linear-gradient(90deg, #a78bfa, #818cf8)',
-  glow: 'rgba(167,139,250,0.4)',
-};
+import ProjectCard from '../components/ProjectCard';
+import { projects } from '../data/projects';
 
 export default function Home() {
-  const [activeSystemId, setActiveSystemId] = useState(systems[0].id);
-  const activeSystem = systems.find((s) => s.id === activeSystemId);
-
   return (
     <>
       <NebulaBackground />
@@ -56,11 +28,12 @@ export default function Home() {
           >
             The Infinite Archive
           </Typography>
+
           <Box sx={{ maxWidth: 580, mx: 'auto' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
               <Box sx={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(124,58,237,0.4))' }} />
               <Typography sx={{ fontFamily: 'Georgia, serif', fontSize: '1.8rem', color: 'rgba(167,139,250,0.35)', lineHeight: 1 }}>
-                {'\u201C'}
+                {'“'}
               </Typography>
               <Box sx={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(124,58,237,0.4), transparent)' }} />
             </Box>
@@ -92,68 +65,13 @@ export default function Home() {
           </Box>
         </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            gap: '36px',
-            alignItems: 'flex-end',
-            paddingBottom: '12px',
-            borderBottom: '1px solid rgba(124,58,237,0.15)',
-            mb: 4,
-            width: 'fit-content',
-            mx: 'auto',
-            px: '24px',
-          }}
-        >
-          {systems.map((system) => {
-            const isActive = system.id === activeSystemId;
-            const grad = SYSTEM_GRADIENTS[system.id] ?? DEFAULT_GRADIENT;
-            return (
-              <Box
-                key={system.id}
-                component="button"
-                onClick={() => setActiveSystemId(system.id)}
-                sx={{
-                  fontFamily: '"Cinzel", serif',
-                  fontSize: '0.68rem',
-                  fontWeight: 700,
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  background: grad.text,
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  opacity: isActive ? 1 : 0.78,
-                  filter: isActive
-                    ? `drop-shadow(0 0 14px ${grad.glow})`
-                    : 'drop-shadow(0 0 6px rgba(226,232,240,0.45))',
-                  cursor: 'pointer',
-                  border: 'none',
-                  backgroundColor: 'transparent',
-                  padding: '0 0 10px 0',
-                  position: 'relative',
-                  '&::after': isActive
-                    ? {
-                        content: '""',
-                        position: 'absolute',
-                        bottom: '-1px',
-                        left: 0,
-                        right: 0,
-                        height: '2px',
-                        borderRadius: '2px',
-                        background: grad.underline,
-                        boxShadow: `0 0 10px ${grad.glow}`,
-                      }
-                    : {},
-                }}
-              >
-                {system.name}
-              </Box>
-            );
-          })}
-        </Box>
-
-        {activeSystem && <SystemSection system={activeSystem} />}
+        <Grid container spacing={3} justifyContent="center">
+          {projects.map((project) => (
+            <Grid key={project.id} size={{ xs: 12, sm: 6, md: 4 }}>
+              <ProjectCard project={project} />
+            </Grid>
+          ))}
+        </Grid>
       </Container>
     </>
   );
