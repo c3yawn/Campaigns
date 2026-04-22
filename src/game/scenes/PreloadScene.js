@@ -4,9 +4,12 @@ export default class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
+    const base = import.meta.env.BASE_URL;
+    this.load.setBaseURL(window.location.origin);
+    this.load.setPath(base + 'game/');
+
     this._createLoadingBar();
 
-    // Tileset + map
     this.load.image('tiles', 'tilesets/tileset.png');
     this.load.tilemapTiledJSON('map', 'maps/world.json');
 
