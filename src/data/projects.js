@@ -10,4 +10,15 @@ export const projects = [
     glow: 'rgba(56, 189, 248, 0.3)',
     tags: ['D&D 5e', 'Stars Without Number', 'Shadowrun'],
   },
+  {
+    id: 'game',
+    title: 'The Yawniverse RPG',
+    description:
+      'A top-down pixel art RPG set in the Yawniverse. Explore hand-crafted worlds, battle enemies, and uncover lore — playable in the browser.',
+    status: 'In Development',
+    path: '/game',
+    gradient: 'linear-gradient(135deg, #f59e0b, #ef4444, #7c3aed)',
+    glow: 'rgba(245, 158, 11, 0.3)',
+    tags: ['RPG', 'Pixel Art', 'Phaser 4'],
+  },
 ];
