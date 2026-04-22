@@ -75,7 +75,7 @@ export default function ProjectCard({ project }) {
         backdropFilter: 'blur(20px)',
         border: '1px solid rgba(124, 58, 237, 0.12)',
         borderRadius: '14px',
-        height: '100%',
+        height: '380px',
         position: 'relative',
         overflow: 'hidden',
         animation: `${pulseGlow} 3s ease-in-out infinite`,
@@ -103,7 +103,7 @@ export default function ProjectCard({ project }) {
     >
       <CardActionArea
         onClick={() => navigate(project.path)}
-        sx={{ height: '100%', alignItems: 'flex-start', '&:hover .MuiCardActionArea-focusHighlight': { opacity: 0 } }}
+        sx={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'stretch', '&:hover .MuiCardActionArea-focusHighlight': { opacity: 0 } }}
       >
         {/* Stars — full card background */}
         <Box sx={{ position: 'absolute', inset: 0, borderRadius: '14px', overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
@@ -182,7 +182,7 @@ export default function ProjectCard({ project }) {
         />
 
         {/* Content */}
-        <CardContent sx={{ p: 3, pb: '20px !important', position: 'relative', zIndex: 1 }}>
+        <CardContent sx={{ p: 3, pb: '20px !important', position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
             <Typography
               variant="h6"
@@ -222,13 +222,17 @@ export default function ProjectCard({ project }) {
               color: 'rgba(148, 163, 184, 0.8)',
               fontSize: '0.8rem',
               lineHeight: 1.75,
-              mb: 2,
+              flex: 1,
+              overflow: 'hidden',
+              display: '-webkit-box',
+              WebkitLineClamp: 4,
+              WebkitBoxOrient: 'vertical',
             }}
           >
             {project.description}
           </Typography>
 
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
             <Typography
               sx={{
                 fontSize: '0.72rem',
