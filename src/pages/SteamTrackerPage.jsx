@@ -48,7 +48,14 @@ function iconUrl(appId, hash) {
 
 function GameIcon({ appId, hash }) {
   const [errored, setErrored] = useState(false);
-  if (!hash || errored) return null;
+  if (!hash || errored) {
+    return (
+      <Box sx={{
+        width: 32, height: 32, borderRadius: '4px', flexShrink: 0,
+        background: 'rgba(124,58,237,0.12)', border: '1px solid rgba(124,58,237,0.12)',
+      }} />
+    );
+  }
   return (
     <Box
       component="img"
@@ -360,6 +367,7 @@ export default function SteamTrackerPage() {
                       {/* Game */}
                       <TableCell sx={{ py: 1.5 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                          <GameIcon appId={game.appid} hash={game.img_icon_url} />
                           {game.completed && (
                             <EmojiEventsIcon sx={{
                               fontSize: 15,
@@ -368,7 +376,6 @@ export default function SteamTrackerPage() {
                               animation: `${trophyGlow} 2.2s ease-in-out infinite`,
                             }} />
                           )}
-                          <GameIcon appId={game.appid} hash={game.img_icon_url} />
                           <Typography sx={{ fontSize: '0.85rem', color: '#e2e8f0', fontWeight: 500 }}>
                             {game.name}
                           </Typography>
