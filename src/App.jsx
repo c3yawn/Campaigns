@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import CampaignsHub from './pages/CampaignsHub';
 import CampaignPage from './pages/CampaignPage';
 import GamePage from './pages/GamePage';
+import SteamTrackerPage from './pages/SteamTrackerPage';
 import Navbar from './components/Navbar';
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/campaigns" element={<CampaignsHub />} />
         <Route path="/campaigns/:systemId/:campaignId" element={<CampaignPage />} />
         <Route path="/game" element={<GamePage />} />
+        <Route path="/steam" element={<SteamTrackerPage />} />
       </Routes>
     </>
   );
