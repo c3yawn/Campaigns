@@ -48,14 +48,7 @@ function iconUrl(appId, hash) {
 
 function GameIcon({ appId, hash }) {
   const [errored, setErrored] = useState(false);
-  if (!hash || errored) {
-    return (
-      <Box sx={{
-        width: 32, height: 32, borderRadius: '4px', flexShrink: 0,
-        background: 'rgba(124,58,237,0.12)', border: '1px solid rgba(124,58,237,0.12)',
-      }} />
-    );
-  }
+  if (!hash || errored) return null;
   return (
     <Box
       component="img"
