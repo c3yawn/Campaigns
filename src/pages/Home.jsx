@@ -79,7 +79,7 @@ export default function Home() {
                   fontFamily: '"Cinzel", serif',
                   fontSize: '0.6rem',
                   letterSpacing: '0.2em',
-                  color: 'rgba(124, 58, 237, 0.6)',
+                  color: 'rgba(167, 139, 250, 0.75)',
                   textTransform: 'uppercase',
                 }}
               >
