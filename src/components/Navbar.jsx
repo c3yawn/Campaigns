@@ -1,17 +1,14 @@
 import { useState } from 'react';
 import { AppBar, Avatar, Box, Button, Divider, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import SignInModal from './SignInModal';
 
 export default function Navbar() {
   const { user, isAdmin, signOut } = useAuth();
-  const location = useLocation();
   const navigate = useNavigate();
   const [signInOpen, setSignInOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState(null);
-  const showAuth = location.pathname !== '/';
-
   const initials = user?.user_metadata?.full_name
     ? user.user_metadata.full_name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()
     : user?.email?.[0]?.toUpperCase() ?? '?';
@@ -25,7 +22,7 @@ export default function Navbar() {
           <Typography
             variant="subtitle2"
             component="span"
-            onClick={!showAuth ? undefined : () => navigate('/')}
+            onClick={() => navigate('/')}
             sx={{
               fontFamily: '"Cinzel", serif',
               fontWeight: 700,
@@ -34,7 +31,7 @@ export default function Navbar() {
               fontSize: '0.92rem',
               textShadow: '0 0 20px rgba(167, 139, 250, 0.5)',
               flexGrow: 1,
-              cursor: showAuth ? 'pointer' : 'default',
+              cursor: 'pointer',
             }}
           >
             The Yawniverse
@@ -67,7 +64,7 @@ export default function Navbar() {
             </Button>
           )}
 
-          {showAuth && (user ? (
+          {user ? (
             <>
               <IconButton
                 onClick={(e) => setMenuAnchor(e.currentTarget)}
@@ -156,7 +153,7 @@ export default function Navbar() {
             >
               Sign In
             </Button>
-          ))}
+          )}
         </Toolbar>
       </AppBar>
 
