@@ -77,7 +77,7 @@ export default function Home() {
                 variant="caption"
                 sx={{
                   fontFamily: '"Cinzel", serif',
-                  fontSize: '0.6rem',
+                  fontSize: '0.72rem',
                   letterSpacing: '0.2em',
                   color: 'rgba(167, 139, 250, 0.75)',
                   textTransform: 'uppercase',
