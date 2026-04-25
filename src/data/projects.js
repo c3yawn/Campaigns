@@ -3,7 +3,7 @@ export const projects = [
     id: 'campaigns',
     title: 'Campaign Codex',
     description:
-      'A living archive of tabletop RPG campaigns across multiple systems. Tracks sessions, lore, NPCs, and party records across Stars Without Number, D&D 5e, and Shadowrun.',
+      'A living archive of my tabletop RPG Campaigns across multiple systems. Tracks sessions, players, lore, NPCs, and party records across my campaigns and systems.',
     status: 'Active',
     path: '/campaigns',
     image: `${import.meta.env.BASE_URL}images/lorebook.png`,
@@ -12,9 +12,9 @@ export const projects = [
   },
   {
     id: 'game',
-    title: 'The Yawniverse RPG',
+    title: 'Dark Embers RPG',
     description:
-      'A top-down pixel art RPG set in the Yawniverse. Explore hand-crafted worlds, battle enemies, and uncover lore — playable in the browser.',
+      'A village burns, and in its final moments, one man stands against a force that has already claimed everything. From the ashes, a lone survivor is left to carry that moment forward into a world reshaped by conquest, where loss is only the beginning, and what rises from it will decide what\'s left to take back.',
     status: 'In Development',
     path: '/game',
     image: `${import.meta.env.BASE_URL}images/rpgcard.png`,

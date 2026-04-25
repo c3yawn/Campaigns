@@ -54,6 +54,7 @@ export default function CampaignCard({
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          height: '100%',
           backgroundColor: 'background.paper',
           transition: 'box-shadow 0.3s ease, transform 0.3s ease',
           '&:hover': {
@@ -64,7 +65,7 @@ export default function CampaignCard({
       >
         <CardActionArea
           onClick={handleCardClick}
-          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}
+          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', flexGrow: 1 }}
         >
           {campaign.image ? (
             <CardMedia
