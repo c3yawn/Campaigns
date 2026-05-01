@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, TextField, Button, CircularProgress, Alert } from '@mui/material';
-import Filter from 'bad-words';
+import { Filter } from 'bad-words';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 
