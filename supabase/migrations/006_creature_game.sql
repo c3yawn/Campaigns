@@ -2,38 +2,30 @@
 -- 006_creature_game.sql
 -- Creature adoption/breeding game schema
 -- Run in Supabase SQL Editor: Dashboard → SQL Editor
+--
+-- Safe to run alongside existing migrations 001-005.
+-- Does NOT recreate profiles, its RLS, or its existing policies.
+-- Only adds the username column and creates all new tables.
 -- ============================================================
 
 -- ── Enums ────────────────────────────────────────────────────
 
-create type rarity_tier as enum ('common', 'uncommon', 'rare', 'very_rare');
-create type creature_gender as enum ('male', 'female');
-create type creature_stage as enum ('egg', 'hatchling', 'adult');
+create type rarity_tier     as enum ('common', 'uncommon', 'rare', 'very_rare');
+create type creature_gender  as enum ('male', 'female');
+create type creature_stage   as enum ('egg', 'hatchling', 'adult');
 create type breeding_outcome as enum ('egg_produced', 'refused', 'no_interest');
-create type trade_status as enum ('open', 'accepted', 'declined', 'cancelled');
-create type transfer_status as enum ('pending', 'claimed', 'expired');
-create type biome_theme as enum ('wild', 'space', 'fantasy');
+create type trade_status     as enum ('open', 'accepted', 'declined', 'cancelled');
+create type transfer_status  as enum ('pending', 'claimed', 'expired');
+create type biome_theme      as enum ('wild', 'space', 'fantasy');
 
--- ── profiles ─────────────────────────────────────────────────
+-- ── Extend profiles (non-destructive) ────────────────────────
+-- Nullable so existing rows (TTRPG users) are unaffected.
+-- Username is set on first login via the username setup flow.
+-- Check constraint enforces alphanumeric + underscores, 3-20 chars.
 
-create table profiles (
-  id          uuid primary key references auth.users on delete cascade,
-  username    text not null unique,
-  created_at  timestamptz not null default now()
-);
-
-alter table profiles enable row level security;
-
-create policy "Public read profiles"
-  on profiles for select
-  to anon, authenticated
-  using (true);
-
-create policy "Users manage own profile"
-  on profiles for all
-  to authenticated
-  using (auth.uid() = id)
-  with check (auth.uid() = id);
+alter table profiles
+  add column if not exists username text unique
+    check (username ~ '^[a-zA-Z0-9_]{3,20}$');
 
 -- ── biomes ───────────────────────────────────────────────────
 
@@ -130,17 +122,17 @@ create policy "Owners manage their creatures"
   using (auth.uid() = owner_id)
   with check (auth.uid() = owner_id);
 
-create index creatures_owner_idx on creatures(owner_id);
-create index creatures_species_idx on creatures(species_id);
+create index creatures_owner_idx     on creatures(owner_id);
+create index creatures_species_idx   on creatures(species_id);
 create index creatures_abandoned_idx on creatures(is_abandoned) where is_abandoned = true;
 
 -- ── creature_views ───────────────────────────────────────────
 
 create table creature_views (
-  creature_id   uuid not null references creatures(id) on delete cascade,
-  viewer_id     uuid not null references profiles(id) on delete cascade,
-  view_count    int not null default 1,
-  clicked       boolean not null default false,
+  creature_id    uuid not null references creatures(id) on delete cascade,
+  viewer_id      uuid not null references profiles(id) on delete cascade,
+  view_count     int not null default 1,
+  clicked        boolean not null default false,
   last_viewed_at timestamptz not null default now(),
   primary key (creature_id, viewer_id)
 );
@@ -242,12 +234,12 @@ create policy "Public read transfers by token"
 -- ── Seed: placeholder biomes ─────────────────────────────────
 
 insert into biomes (id, name, description, theme, is_active) values
-  ('forest',    'The Forest',     'Dense woodland teeming with shy creatures.',        'wild', true),
-  ('wetlands',  'The Wetlands',   'Murky swamps and slow rivers.',                     'wild', true),
-  ('mountains', 'The Mountains',  'High peaks where hardy animals make their home.',   'wild', true),
-  ('savanna',   'The Savanna',    'Open grasslands under a wide sky.',                 'wild', true),
-  ('tundra',    'The Tundra',     'Frozen expanses, sparse but full of surprises.',    'wild', true),
-  ('deep_sea',  'The Deep Sea',   'Lightless depths hiding creatures rarely seen.',    'wild', false);
+  ('forest',    'The Forest',    'Dense woodland teeming with shy creatures.',      'wild', true),
+  ('wetlands',  'The Wetlands',  'Murky swamps and slow rivers.',                   'wild', true),
+  ('mountains', 'The Mountains', 'High peaks where hardy animals make their home.', 'wild', true),
+  ('savanna',   'The Savanna',   'Open grasslands under a wide sky.',               'wild', true),
+  ('tundra',    'The Tundra',    'Frozen expanses, sparse but full of surprises.',  'wild', true),
+  ('deep_sea',  'The Deep Sea',  'Lightless depths hiding creatures rarely seen.',  'wild', false);
 
 -- ── Seed: placeholder species ────────────────────────────────
 
