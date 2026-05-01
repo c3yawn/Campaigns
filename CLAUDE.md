@@ -10,12 +10,12 @@ A personal TTRPG campaign tracker for the user (last name: Yawn). Branded "The Y
 - **MUI v9** + Emotion
 - **React Router v7** — `BrowserRouter` with `basename={import.meta.env.BASE_URL}`
 - **Google Fonts** — Uncial Antiqua (hero title) + Cinzel (display) + Raleway (body, italic axis loaded)
-- Deployed via **GitHub Actions** → **GitHub Pages** at `c3yawn.github.io/Campaigns`
+- Deployed via **GitHub Actions** → **GitHub Pages** at `c3yawn.github.io/Yawniverse`
 
 ---
 
 ## Repo & Branch Setup
-- **Repo**: `c3yawn/Campaigns`
+- **Repo**: `c3yawn/Yawniverse`
 - **Feature branch**: `claude/ttrpg-tracker-planning-OeN3Y`
 - **Production branch**: `main` (GitHub Pages deploys from here)
 - Always develop on the feature branch, push to both:
@@ -28,7 +28,7 @@ A personal TTRPG campaign tracker for the user (last name: Yawn). Branded "The Y
 
 ## Deployment Notes
 - `vite.config.js` sets `base: process.env.VITE_BASE_PATH ?? '/'`
-- CI sets `VITE_BASE_PATH=/Campaigns/` so assets resolve correctly under the sub-path
+- CI sets `VITE_BASE_PATH=/Yawniverse/` so assets resolve correctly under the sub-path
 - `cp dist/index.html dist/404.html` in CI handles SPA deep-link routing on GitHub Pages
 - Static assets (video, images) in `public/` must use `${import.meta.env.BASE_URL}filename` — **not** `/filename` — or they 404 on GitHub Pages
 - Workflow: `.github/workflows/deploy.yml`
