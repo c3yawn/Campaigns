@@ -1,5 +1,10 @@
 # The Yawniverse — Claude Session Context
 
+## Interaction Rules
+- **Always use the `AskUserQuestion` tool when asking the user questions.** Never ask questions as plain text.
+
+---
+
 ## What This Is
 A personal TTRPG campaign tracker for the user (last name: Yawn). Branded "The Yawniverse" / "Campaign Codex". Displays all campaigns grouped by game system as cards, routes to individual campaign detail pages. Hosted on GitHub Pages.
 
