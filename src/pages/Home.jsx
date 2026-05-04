@@ -90,7 +90,7 @@ export default function Home() {
         </Box>
 
         <Grid container spacing={3} justifyContent="center">
-          {projects.map((project) => (
+          {projects.filter(p => !p.hidden).map((project) => (
             <Grid key={project.id} size={{ xs: 12, sm: 6, md: 4 }}>
               <ProjectCard project={project} />
             </Grid>

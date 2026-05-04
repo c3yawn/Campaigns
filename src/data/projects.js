@@ -24,6 +24,7 @@ export const projects = [
   {
     id: 'game',
     title: 'Dark Embers RPG',
+    hidden: true,
     description:
       'A village burns. One man stands against a force that\'s already won. The lone survivor carries it forward, into a world reshaped by conquest, where what rises from the ashes decides what\'s left to take back.',
     status: 'In Development',
