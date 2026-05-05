@@ -152,8 +152,9 @@ Deno.serve(async (req: Request) => {
   const worldKey = biomeRow?.biome_id ?? 'umihotaru';
   const species = creature.species as { name: string; rarity: string } | null;
 
-  // Log the view (fire-and-forget — don't await, don't block response)
-  supabase.rpc('increment_creature_views', { p_creature_id: creatureId });
+  // Log the view — await so errors show in Edge Function logs
+  const { error: rpcError } = await supabase.rpc('increment_creature_views', { p_creature_id: creatureId });
+  if (rpcError) console.error('increment_creature_views failed:', rpcError.message, rpcError.code);
 
   // Check Supabase Storage for a real sprite first
   const { data: spriteFile } = await supabase.storage
