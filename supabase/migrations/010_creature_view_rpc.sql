@@ -6,6 +6,7 @@ language sql
 security definer
 as $$
   update creatures
-  set views = views + 1
+  set views = views + 1,
+      unique_views = unique_views + 1
   where id = p_creature_id;
 $$;

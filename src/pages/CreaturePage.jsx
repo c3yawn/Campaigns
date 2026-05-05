@@ -140,7 +140,7 @@ export default function CreaturePage() {
     ? `${displayName} — ${RARITY_CONFIG[creature.species?.rarity]?.label ?? 'Creature'} · Arcadia`
     : 'Arcadia — Creature Collection';
   const ogDescription = creature
-    ? `A ${creature.stage} ${creature.species?.name ?? 'creature'} from ${WORLD_CONFIG[world]?.label ?? 'the stars'}. Views: ${creature.unique_views}`
+    ? `A ${creature.stage} ${creature.species?.name ?? 'creature'} from ${WORLD_CONFIG[world]?.label ?? 'the stars'}. Views: ${creature.views}`
     : 'Adopt and raise creatures from across charted space.';
 
   if (loading) {
@@ -347,7 +347,7 @@ export default function CreaturePage() {
           <StatRow label="Generation" value={`Gen ${creature.generation}`} />
           <StatRow label="Origin" value={creature.is_cave_born ? 'Wild-born' : 'Bred'} />
           <StatRow label="Adopted" value={adoptedDate} />
-          <StatRow label="Views" value={creature.unique_views.toLocaleString()} valueColor="#94a3b8" />
+          <StatRow label="Views" value={creature.views.toLocaleString()} valueColor="#94a3b8" />
         </Box>
 
         {/* Owner name hint */}
