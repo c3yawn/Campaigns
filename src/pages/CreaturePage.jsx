@@ -64,6 +64,7 @@ export default function CreaturePage() {
 
   const [creature, setCreature] = useState(null);
   const [world, setWorld] = useState(null);
+  const [thresholds, setThresholds] = useState({ hatchling: 25, juvenile: 100 });
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -74,16 +75,22 @@ export default function CreaturePage() {
 
   useEffect(() => {
     async function load() {
-      const { data, error } = await supabase
-        .from('creatures')
-        .select(`
-          id, name, gender, stage, generation, views, unique_views,
-          is_cave_born, adopted_at, hatched_at, grew_up_at,
-          owner_id,
-          species:species_id ( id, name, rarity, description )
-        `)
-        .eq('id', creatureId)
-        .single();
+      const [{ data, error }, { data: settingsRows }, ] = await Promise.all([
+        supabase
+          .from('creatures')
+          .select(`
+            id, name, gender, stage, generation, views, unique_views,
+            is_cave_born, adopted_at, hatched_at, grew_up_at,
+            owner_id,
+            species:species_id ( id, name, rarity, description )
+          `)
+          .eq('id', creatureId)
+          .single(),
+        supabase
+          .from('game_settings')
+          .select('key, value')
+          .in('key', ['hatchling_views_threshold', 'juvenile_views_threshold']),
+      ]);
 
       if (error || !data) { setNotFound(true); setLoading(false); return; }
 
@@ -93,6 +100,14 @@ export default function CreaturePage() {
         .eq('species_id', data.species.id)
         .limit(1)
         .single();
+
+      if (settingsRows) {
+        const s = Object.fromEntries(settingsRows.map(r => [r.key, r.value]));
+        setThresholds({
+          hatchling: s['hatchling_views_threshold'] ?? 25,
+          juvenile: s['juvenile_views_threshold'] ?? 100,
+        });
+      }
 
       setCreature(data);
       setNameInput(data.name ?? '');
@@ -349,6 +364,61 @@ export default function CreaturePage() {
           <StatRow label="Adopted" value={adoptedDate} />
           <StatRow label="Views" value={creature.views.toLocaleString()} valueColor="#94a3b8" />
         </Box>
+
+        {/* Stage progression */}
+        {creature.stage !== 'adult' && (() => {
+          const nextStage = creature.stage === 'hatchling' ? 'juvenile' : 'adult';
+          const threshold = creature.stage === 'hatchling' ? thresholds.hatchling : thresholds.juvenile;
+          const progress = Math.min(creature.views / threshold, 1);
+          const viewsLeft = Math.max(threshold - creature.views, 0);
+
+          return (
+            <Box
+              sx={{
+                mt: 3,
+                background: 'rgba(6,4,20,0.88)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(124,58,237,0.1)',
+                borderRadius: 2.5,
+                p: 3,
+              }}
+            >
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', mb: 1.5 }}>
+                <Typography sx={{ fontFamily: '"Raleway", sans-serif', fontSize: '0.75rem', fontWeight: 700, color: '#64748b', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                  Growth
+                </Typography>
+                <Typography sx={{ fontFamily: '"Raleway", sans-serif', fontSize: '0.75rem', color: '#64748b' }}>
+                  {viewsLeft > 0 ? `${viewsLeft} views until ${nextStage}` : `Ready to become ${nextStage}`}
+                </Typography>
+              </Box>
+
+              {/* Progress bar */}
+              <Box sx={{ height: 5, borderRadius: 3, background: 'rgba(124,58,237,0.12)', overflow: 'hidden' }}>
+                <Box
+                  sx={{
+                    height: '100%',
+                    width: `${progress * 100}%`,
+                    borderRadius: 3,
+                    background: progress >= 1
+                      ? `linear-gradient(90deg, ${worldCfg.accent}, ${worldCfg.accent}cc)`
+                      : `linear-gradient(90deg, rgba(124,58,237,0.6), ${worldCfg.accent}99)`,
+                    transition: 'width 0.6s ease',
+                    boxShadow: progress >= 1 ? `0 0 8px ${worldCfg.accent}88` : 'none',
+                  }}
+                />
+              </Box>
+
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
+                <Typography sx={{ fontFamily: '"Raleway", sans-serif', fontSize: '0.7rem', color: '#64748b', textTransform: 'capitalize' }}>
+                  {creature.stage}
+                </Typography>
+                <Typography sx={{ fontFamily: '"Raleway", sans-serif', fontSize: '0.7rem', color: '#64748b', textTransform: 'capitalize' }}>
+                  {nextStage}
+                </Typography>
+              </Box>
+            </Box>
+          );
+        })()}
 
         {/* Owner name hint */}
         {isOwner && !creature.name && !editing && (
